@@ -44,106 +44,123 @@ pip install pyspark pandas numpy matplotlib seaborn
 ```
 
 
-📂 Dataset
-The dataset used is mini_sparkify_event_data.json, which includes user logs with events like:
+---
 
-Playing songs
+## 📂 Dataset
 
-Thumbs up/down
+The dataset used is `mini_sparkify_event_data.json`, which includes user logs with events like:
 
-Logging in/out
+- 🎵 Playing songs  
+- 👍 Thumbs up / 👎 Thumbs down  
+- 🔐 Logging in / out  
+- 🔼 Submitting upgrade requests  
+- 🔽 Submitting downgrade requests  
+- ❌ Cancelling subscription  
 
-Submitting upgrade/downgrade requests
+---
 
-Cancelling subscription
+## 🧪 Methodology
 
-🧪 Methodology
-Data Cleaning
+### 🔹 Data Cleaning
+- Dropped rows with missing `userId` or `sessionId`
+- Removed rows with empty or whitespace-only `userId`
 
-Dropped rows with missing userId or sessionId
+### 🔹 Exploratory Data Analysis (EDA)
+- Analyzed user behavior such as:
+  - Listening time  
+  - Types of events  
+  - Number of songs played  
+  - Session duration  
+- Visualized churn distribution and correlations with user activity
 
-Removed rows with empty or whitespace-only userId
+### 🔹 Feature Engineering
+- Created features like:
+  - Number of thumbs up/down  
+  - Total songs played  
+  - Number of upgrade/downgrade events  
+  - Total listening time  
+  - Subscription level  
+- Aggregated user-level metrics using Spark window functions
 
-Exploratory Data Analysis (EDA)
+### 🔹 Modeling
+Models trained using Spark MLlib:
+- Logistic Regression  
+- Random Forest  
+- Gradient-Boosted Trees (GBT)  
+- Naive Bayes  
+- Support Vector Machines (SVM)  
 
-Analyzed user behavior like listening time, event types, number of songs, session duration, etc.
+Model performance evaluated using:
+- **F1 Score** (primary metric due to class imbalance)  
+- **Precision**  
+- **Recall**
 
-Visualized churn distribution and its relationship to user activities
+---
 
-Feature Engineering
+## 📊 Exploratory Data Analysis
 
-Created features like number of thumbs up, total songs played, downgrade/upgrade events, and more
+Key insights from EDA:
+- Churned users interacted with the app less frequently
+- More downgrades observed among users who churned
+- Less time spent listening correlated with higher churn probability
 
-Aggregated user-level features using Spark window functions
+---
 
-Modeling
+## 🛠️ Feature Engineering
 
-Used MLlib models including:
+Engineered user-level features include:
+- 🎧 Number of sessions  
+- 🎼 Number of songs played  
+- 👍/👎 Thumb up/down counts  
+- 🔼/🔽 Upgrade and downgrade counts  
+- ⏱️ Total listening time  
+- 💳 Subscription level  
 
-Logistic Regression
+All features were standardized prior to model training to ensure consistent scale and performance.
 
-Random Forest
+---
 
-Gradient-Boosted Trees
+## 🤖 Modeling
 
-Naive Bayes
+Multiple classification models were trained:
 
-Support Vector Machines
+| Model               | Description                                      |
+|---------------------|--------------------------------------------------|
+| Logistic Regression | Baseline binary classifier                       |
+| Random Forest       | Handles nonlinear relationships well             |
+| GBTClassifier       | Best F1 score, captures complex patterns         |
+| SVM                 | Compared for completeness                        |
+| Naive Bayes         | Simple probabilistic model, baseline comparison  |
 
-Evaluated models using F1 score, precision, and recall
+---
 
-📊 Exploratory Data Analysis
-EDA helped uncover trends such as:
+## ✅ Results
 
-Churned users often had fewer interactions
+- 🏆 **Best Performing Model**: Gradient-Boosted Trees (GBTClassifier)
+- 📏 **Evaluation Metric**: F1 Score  
+- 💡 **Reason**: GBT captured nonlinear patterns and performed best under class imbalance
 
-Downgrades were more frequent among churned users
+---
 
-Less time spent on the platform often indicated churn
+## 📌 Conclusion
 
-🛠️ Feature Engineering
-Engineered features include:
+This end-to-end churn prediction pipeline demonstrates the power of Spark in handling large-scale event data, allowing:
 
-Number of sessions
+- Efficient data cleaning and processing  
+- Scalable feature engineering  
+- Fast and distributed model training  
 
-Number of songs played
+These insights can help businesses proactively reduce churn and improve user retention with targeted incentives.
 
-Thumb up/down counts
+---
 
-Downgrade and upgrade counts
+## 🚀 Future Work
 
-Total listening time
+- 📈 Implement model interpretability (e.g., SHAP or LIME)  
+- 🌐 Train on full 12GB dataset using a distributed Spark cluster  
+- 🛠️ Deploy model as a REST API for real-time churn prediction  
 
-User's subscription level
-
-All features were standardized before modeling.
-
-🤖 Modeling
-Several classification models were trained and evaluated:
-
-Model	Notes
-Logistic Regression	Baseline binary classifier
-Random Forest	Strong performance on nonlinear features
-GBTClassifier	Achieved best F1 score
-SVM & Naive Bayes	Compared for completeness
-
-✅ Results
-Best Model: Gradient-Boosted Trees
-
-Evaluation Metric: F1 score to handle class imbalance
-
-GBT achieved the highest predictive performance by capturing nonlinear relationships.
-
-📌 Conclusion
-The project demonstrates a full pipeline of handling large-scale event data using Spark, from data cleaning and feature engineering to predictive modeling. These insights can help businesses make informed decisions to reduce churn and improve customer retention.
-
-🚀 Future Work
-Implement model interpretability using SHAP
-
-Train on full 12GB dataset using distributed Spark cluster
-
-Deploy model as a REST API for real-time churn prediction
-
+---
 
 
 
